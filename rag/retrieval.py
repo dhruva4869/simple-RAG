@@ -47,3 +47,50 @@ class BM25Retrieval(BaseRetrieval):
             metadata = [self.metadata[i] for i in top_n]
         docs = [self.documents[i] for i in top_n]
         return docs, metadata
+
+
+class VectorRetrieval(BaseRetrieval):
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        from .vector_db import VectorDatabase
+        from .embeddings import SentenceTransformerEmbedder
+        
+        persist_directory = kwargs.get("persist_directory", "./vector_db")
+        collection_name = kwargs.get("collection_name", "documents")
+        embedder = kwargs.get("embedder", SentenceTransformerEmbedder())
+        
+        self.vector_db = VectorDatabase(
+            persist_directory=persist_directory,
+            collection_name=collection_name,
+            embedder=embedder
+        )
+        
+        documents = kwargs.get("documents")
+        metadata = kwargs.get("metadata")
+        if documents:
+            self.ingest(documents, metadata)
+    
+    def ingest(self, documents: list[str], metadata: Optional[list[dict]] = None) -> bool:
+        if not documents:
+            return False
+        
+        try:
+            self.vector_db.add_documents(documents, metadata)
+            return True
+        except Exception as e:
+            print(f"Error ingesting documents: {e}")
+            return False
+    
+    def retrieve(self, query: str, top_k: int = 10):
+        try:
+            results = self.vector_db.search(query, top_k=top_k)
+            docs = results["documents"]
+            metadata = results["metadatas"]
+            return docs, metadata
+        except Exception as e:
+            print(f"Error retrieving documents: {e}")
+            return [], []
+    
+    def rerank(self, query: str, documents: list[dict], top_k: int = 10) -> list[dict]:
+        return documents[:top_k]

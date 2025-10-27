@@ -34,4 +34,5 @@ class SimpleRAGPipeline(Pipeline):
         if self.rerank:
             docs, _ = self.rerank.rerank(query, docs, top_k=self.rerank_top_k)
         prompt = ANSWER_PROMPT.format(query=query, context="\n".join(docs))
+        # print(prompt)
         return Answer(self.llm.generate(prompt), docs)

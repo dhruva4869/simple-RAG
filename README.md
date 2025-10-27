@@ -1,4 +1,4 @@
-# RAG Simple
+# RAG implementation
 
 A simple Retrieval Augmented Generation (RAG) pipeline implementation.
 

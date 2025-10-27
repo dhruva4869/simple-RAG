@@ -30,7 +30,7 @@ class SimpleRAGPipeline(Pipeline):
         self.retrieval_top_k, self.rerank_top_k = retrieval_top_k, rerank_top_k
 
     def run(self, query: str) -> Answer:
-        docs, _ = self.retrieval.retrieve(query, top_k=self.retrieval_top_k)
+        docs, metadata = self.retrieval.retrieve(query, top_k=self.retrieval_top_k)
         if self.rerank:
             docs, _ = self.rerank.rerank(query, docs, top_k=self.rerank_top_k)
         prompt = ANSWER_PROMPT.format(query=query, context="\n".join(docs))

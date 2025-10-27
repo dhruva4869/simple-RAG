@@ -38,8 +38,5 @@ class CachedEmbedder(BaseEmbedder):
         return self.cache.get(text) or self.cache.set(text, self.embedder.embed_text(text)) or self.cache.get(text)
 
     def embed_texts(self, texts: List[str]) -> np.ndarray:
-        embeddings, to_embed = [], [t for t in texts if t not in self.cache.cache]
-        if to_embed:
-            new_embs = self.embedder.embed_texts(to_embed)
-            for t, e in zip(to_embed, new_embs): self.cache.set(t, e)
+        [self.cache.set(t, self.embedder.embed_text(t)) for t in texts if t not in self.cache.cache]
         return np.array([self.cache.get(t) for t in texts])

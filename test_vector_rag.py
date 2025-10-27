@@ -42,14 +42,23 @@ def test_vector_rag():
 
     test_queries = [
         "What can Ollama do?",
-        "What is Clash Royale?"
+        "What is Clash Royale?",
+        "Que peut faire Ollama ?",
+        "Hello there!",
     ]
     
     for query in test_queries:
         print(f"\n--- Query: {query} ---")
         response: Answer = pipeline.run(query)
         print(f"Answer: {response.answer}")
-    
-    return pipeline
 
+    while True:
+        carry = input("Do you want to ask another question? (y/n): ")
+        if carry == "y":
+            query = input("Your question: ")
+            response: Answer = pipeline.run(query)
+            print(f"Answer: {response.answer}")
+        else:
+            break
+    
 test_vector_rag()

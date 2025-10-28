@@ -100,6 +100,7 @@ def test_vector_rag():
     )
     
     test_queries = [
+        "What are some neural policy gradient methods?",
         "What is RLHF?",
         "How do Lifelong RL systems work?"
     ]

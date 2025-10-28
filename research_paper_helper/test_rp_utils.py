@@ -67,4 +67,4 @@ def get_important_keywords(research_paper):
 
 # TODO - the title always has to be perfect otherwise it just won't work
 # because it is a draft research paper, we can assume the person uploading it will give the perfect title
-print(get_important_keywords("./documents/Reinforcement_Learning_from_Human_Feedback_draft.pdf"))
+# print(get_important_keywords("./documents/Reinforcement_Learning_from_Human_Feedback_draft.pdf"))

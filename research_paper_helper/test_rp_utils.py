@@ -68,3 +68,44 @@ def get_important_keywords(research_paper):
 # TODO - the title always has to be perfect otherwise it just won't work
 # because it is a draft research paper, we can assume the person uploading it will give the perfect title
 # print(get_important_keywords("./documents/Reinforcement_Learning_from_Human_Feedback_draft.pdf"))
+
+
+# def get_github_link_of_research_paper(research_paper):
+#     import sys
+#     import os
+#     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+#     from rag.data_parser import PDFReader
+#     text = PDFReader(pdf_paths=[research_paper]).read()
+#     text = " ".join(text)
+    
+#     github_patterns = [
+#         r'https?://github\.com/[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+',
+#         r'github\.com/[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+',
+#         r'https?://www\.github\.com/[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+',
+#         r'www\.github\.com/[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+'
+#     ]
+    
+#     github_links = []
+#     for pattern in github_patterns:
+#         matches = re.findall(pattern, text, re.IGNORECASE)
+#         github_links.extend(matches)
+    
+#     seen = set()
+#     unique_links = []
+#     for link in github_links:
+#         normalized_link = link.lower()
+#         if normalized_link not in seen:
+#             seen.add(normalized_link)
+#             if not link.startswith(('http://', 'https://')):
+#                 link = 'https://' + link
+#             unique_links.append(link)
+    
+#     return unique_links
+
+# def get_github_link_of_multiple_research_papers(folder_path):
+#     github_links = []
+#     for research_paper in os.listdir(folder_path):
+#         github_links.extend(get_github_link_of_research_paper(f"{folder_path}/{research_paper}"))
+#     return github_links
+
+# print(get_github_link_of_multiple_research_papers("./research_papers/Learning"))

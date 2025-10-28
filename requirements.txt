@@ -8,4 +8,6 @@ chromadb==0.4.22
 sentence-transformers==2.7.0
 huggingface-hub==0.20.3
 numpy==1.24.3
+scikit-learn>=1.1.0
 arxiv
+yake
